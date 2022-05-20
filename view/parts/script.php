@@ -1,0 +1,1 @@
+<script src="<?= dirname("/") . "SHIFOUMI/public/assets/js/script.js" ?>"></script>
