@@ -4,7 +4,7 @@
 
 
 <div id="home">
-    <h2 id="score"></h2>
+    <h3 id="score"></h3>
     <div id="computer-choice">
         <img id="computer-stone" src="./public/assets/img/a-stone-meteorite-isolated-on-white-background-free-vector-removebg-preview.png"></img>
         <img id="computer-paper" src="./public/assets/img/Mirella-Gabriele-Fantasy-Mediaeval-Paper (1).png"></img>

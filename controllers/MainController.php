@@ -8,12 +8,14 @@ class MainController
     protected array $choices;
     protected string $computer;
     protected bool $win;
+    protected bool $loose;
 
-    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0)
+    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0, $loose = 0)
     {
         $this->choices = $choices;
         $this->computer = $computer;
         $this->win = $win;
+        $this->loose = $loose;
     }
 
     public function setComputer($computer)
@@ -36,6 +38,15 @@ class MainController
     {
         $this->win = $win;
     }
+    public function getLoose()
+    {
+        return $this->win;
+    }
+
+    public function setLoose($loose)
+    {
+        $this->loose = $loose;
+    }
 
     function index()
     {
@@ -46,22 +57,33 @@ class MainController
     {
         if ($this->getComputer() === "SCISSOR")
             return true;
+        elseif ($this->getComputer() === "STONE")
+            $this->setLoose(false);
         else
+            $this->setLoose(true);
         return false;
     }
 
-    public function paper(){
+    public function paper()
+    {
         if ($this->getComputer() === "STONE")
-        return true;
+            return true;
+        elseif ($this->getComputer() === "PAPER")
+            $this->setLoose(false);
         else
+            $this->setLoose(true);
         return false;
     }
 
-    public function scissor(){
+    public function scissor()
+    {
         if ($this->getComputer() === "PAPER")
-        return true;
+            return true;
+            elseif ($this->getComputer() === "SCISSOR")
+            $this->setLoose(false);
         else
-        return false;
+            $this->setLoose(true);
+            return false;
     }
 
     function playing()
@@ -69,16 +91,19 @@ class MainController
         $rand = random_int(0, 2);
         $computer = $this->choices[$rand];
         $this->setComputer($computer);
-        if($_GET['action'] === "stone"){
+        if ($_GET['action'] === "stone") {
             $win =  $this->stone();
+            $this->loose ? $loose = true : $loose = false;
         }
-        if($_GET['action'] === "paper"){
+        if ($_GET['action'] === "paper") {
             $win =  $this->paper();
+            $this->loose ? $loose = true : $loose = false;
         }
-        if($_GET['action'] === "scissor"){
+        if ($_GET['action'] === "scissor") {
             $win =  $this->scissor();
+            $this->loose ? $loose = true : $loose = false;
         }
-        $res = [$computer,$win];
+        $res = [$computer, $win, $loose];
         echo json_encode($res);
     }
 }

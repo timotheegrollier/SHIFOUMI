@@ -3,11 +3,13 @@ window.addEventListener('load', () => {
     const pierre = document.getElementById('stone')
     const feuille = document.getElementById('paper')
     const ciseaux = document.getElementById('scissor')
-    const scoreDisplay = document.getElementById('score')
 
     let score = 0;
 
-    scoreDisplay.innerHTML = "SCORE : " + score
+    let computerScore = 0;
+
+
+    displayScore(score,computerScore);
 
     const choices = document.querySelectorAll('.choices')
     choices.forEach(el => {
@@ -16,7 +18,7 @@ window.addEventListener('load', () => {
 
             let xhr = new XMLHttpRequest();
             choicesBox.style.display = "none"
-            xhr.open('GET', '/SHIFOUMI/index.php?action=' + el.id)
+            xhr.open('GET', '?action=' + el.id)
 
             xhr.onload = () => {
                 let data = JSON.parse(xhr.responseText)
@@ -43,7 +45,11 @@ window.addEventListener('load', () => {
                 }, 1000)
                 if (data[1]) {
                     score++;
-                    scoreDisplay.innerHTML = "SCORE : " + score
+                    displayScore(score,computerScore);
+                }
+                if (data[2]){
+                    computerScore++;
+                    displayScore(score,computerScore);
                 }
             }
 
@@ -52,3 +58,10 @@ window.addEventListener('load', () => {
     })
 
 })
+
+
+const displayScore = (score,computerScore)=>{
+    const scoreDisplay = document.getElementById('score')
+    scoreDisplay.innerHTML = `YOU : ${score}
+    <p class="computer-score">COMPUTER : ${computerScore}</p>`
+}
