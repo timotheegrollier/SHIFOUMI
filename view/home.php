@@ -1,4 +1,4 @@
-<?php $title = 'home'; ?>
+<?php $title = 'SHIFOUMI'; ?>
 
 <?php ob_start(); ?>
 
