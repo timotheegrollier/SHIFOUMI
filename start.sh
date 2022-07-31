@@ -1,0 +1,1 @@
+rm -rf data && docker-compose up -d && git clone https://github.com/timotheegrollier/SHIFOUMI && mv ./SHIFOUMI ./data
