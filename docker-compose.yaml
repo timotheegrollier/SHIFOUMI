@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
+    container_name: web
     image: nginx:latest
     ports:
       - 90:90
@@ -11,14 +12,46 @@ services:
       - shifoumi
     
   php:
+    container_name: php
     image: php:8-fpm
     volumes:
       - ./data:/data
     networks:
       - shifoumi
 
+  database:
+      container_name: database
+      volumes:
+       - db-data:/var/lib/mysql
+      image: 'mysql'
+      environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      ports:
+          - '3306'
+      networks:
+        - shifoumi
+
+    
+    
+
+
+  phpmyadmin:
+      container_name: pma
+      image: phpmyadmin
+      restart: always
+      ports:
+          - 8080:80
+      environment:
+          PMA_HOST: database
+          UPLOAD_LIMIT: 300M
+      networks:
+        - shifoumi
+
 
 
 networks:
   shifoumi:
     driver: bridge
+
+volumes:
+  db-data: {}
