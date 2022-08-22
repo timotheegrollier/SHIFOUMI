@@ -2,6 +2,10 @@
 
 namespace SHIFOUMI\controllers;
 
+
+
+
+
 class MainController
 {
 
@@ -9,13 +13,48 @@ class MainController
     protected string $computer;
     protected bool $win;
     protected bool $loose;
+    
 
-    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0, $loose = 0)
+   
+
+    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0, $loose = 0,)
     {
         $this->choices = $choices;
         $this->computer = $computer;
         $this->win = $win;
         $this->loose = $loose;
+        // $this->bdd = $bdd;
+    }
+
+    public function resetBest(){
+        include './config/Database.php';
+        $req = $pdo->prepare('UPDATE score SET score = :score WHERE id = :id');
+    
+        $req->execute(array(
+               'score' => 0,
+               'id' => 1
+               ));
+
+    }
+
+
+    public function getBestScore(){
+        include './config/Database.php';
+        $data = $pdo->query('SELECT * FROM score')->fetch();
+        return $data;
+    }
+
+    public function setBestScore($score,$bestScore){
+        if($score > $bestScore){
+            include './config/Database.php';
+            $req = $pdo->prepare('UPDATE score SET score = :score WHERE id = :id');
+    
+            $req->execute(array(
+                   'score' => $score,
+                   'id' => 1
+                   ));
+    
+        }
     }
 
     public function setComputer($computer)
@@ -50,6 +89,8 @@ class MainController
 
     function index()
     {
+        
+        $score = $this->getBestScore()['score'];
         require_once("./view/home.php");
     }
 

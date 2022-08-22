@@ -3,13 +3,24 @@ window.addEventListener('load', () => {
     const pierre = document.getElementById('stone')
     const feuille = document.getElementById('paper')
     const ciseaux = document.getElementById('scissor')
+    const resetBest = document.getElementById('resetBest');
+    const gameFooter = document.getElementById('game-footer');
+    let bestScore = parseInt(document.getElementById('best-score-score').innerHTML);
+
+
 
     let score = 0;
 
     let computerScore = 0;
 
+    resetBest.addEventListener('click', (e) => {
+        resetBestScore(e);
+        score = 0;
+        computerScore = 0
+        displayScore(score,computerScore)
+    })
 
-    displayScore(score,computerScore);
+    displayScore(score, computerScore);
 
     const choices = document.querySelectorAll('.choices')
     choices.forEach(el => {
@@ -18,6 +29,7 @@ window.addEventListener('load', () => {
 
             let xhr = new XMLHttpRequest();
             choicesBox.style.display = "none"
+            gameFooter.style.display = "none"
             xhr.open('GET', '?action=' + el.id)
 
             xhr.onload = () => {
@@ -41,15 +53,20 @@ window.addEventListener('load', () => {
                 setTimeout(() => {
                     computerScissor.style.display = "none"
                     choicesBox.style.display = "flex"
-
+                    gameFooter.style.display = "flex"
                 }, 1000)
                 if (data[1]) {
                     score++;
-                    displayScore(score,computerScore);
+                    displayScore(score, computerScore);
+                    if (score > bestScore) {
+                        setBestScore(score, bestScore).then(
+                            document.getElementById('best-score-score').innerHTML = score
+                        )
+                    }
                 }
-                if (data[2]){
+                if (data[2]) {
                     computerScore++;
-                    displayScore(score,computerScore);
+                    displayScore(score, computerScore);
                 }
             }
 
@@ -57,11 +74,44 @@ window.addEventListener('load', () => {
         })
     })
 
+
+
+
+
 })
 
+const setBestScore = async (score, bestScore) => {
+    console.log('New best !');
+    let xhr = new XMLHttpRequest();
 
-const displayScore = (score,computerScore)=>{
+    xhr.open('POST', '/')
+
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    await xhr.send('score=' + score + '&bestScore=' + bestScore)
+
+}
+
+const displayScore = (score, computerScore) => {
     const scoreDisplay = document.getElementById('score')
     scoreDisplay.innerHTML = `YOU : ${score}
     <p class="computer-score">COMPUTER : ${computerScore}</p>`
+}
+
+
+const resetBestScore = (e) => {
+    e.preventDefault();
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('POST', '/')
+
+
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    document.getElementById('best-score-score').innerHTML = 0
+
+
+
+    xhr.send('delete=bestScore')
 }

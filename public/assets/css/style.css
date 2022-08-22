@@ -66,6 +66,24 @@ h3{
     justify-content: space-around;
 }
 
+#game-footer{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#game-footer button{
+    width: 50%;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#game-footer #best-score{
+    color: yellow;
+}
+
 @media screen and (max-width: 768px) {
     #player-choice {
         margin-top: 100px !important;
