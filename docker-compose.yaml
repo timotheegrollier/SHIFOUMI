@@ -32,6 +32,7 @@ services:
           - '3306'
       networks:
         - shifoumi
+      restart: always
 
     
     
