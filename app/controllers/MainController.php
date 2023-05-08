@@ -13,16 +13,18 @@ class MainController
     protected string $computer;
     protected bool $win;
     protected bool $loose;
+    protected bool $equal;
     
 
    
 
-    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0, $loose = 0,)
+    public function __construct(array $choices = ['STONE', 'PAPER', 'SCISSOR'], string $computer = "", $win = 0, $loose = 0,$equal = 0)
     {
         $this->choices = $choices;
         $this->computer = $computer;
         $this->win = $win;
         $this->loose = $loose;
+        $this->equal = $equal;
         // $this->bdd = $bdd;
     }
 
@@ -109,8 +111,10 @@ class MainController
     {
         if ($this->getComputer() === "STONE")
             return true;
-        elseif ($this->getComputer() === "PAPER")
+        elseif ($this->getComputer() === "PAPER"){
             $this->setLoose(false);
+            $this->equal = true;
+        }
         else
             $this->setLoose(true);
         return false;
@@ -120,8 +124,10 @@ class MainController
     {
         if ($this->getComputer() === "PAPER")
             return true;
-            elseif ($this->getComputer() === "SCISSOR")
-            $this->setLoose(false);
+            elseif ($this->getComputer() === "SCISSOR"){
+                $this->setLoose(false);
+                $this->equal = true;
+            }
         else
             $this->setLoose(true);
             return false;
@@ -144,7 +150,9 @@ class MainController
             $win =  $this->scissor();
             $this->loose ? $loose = true : $loose = false;
         }
-        $res = [$computer, $win, $loose];
+        $res = [$computer, $win, $loose,$this->equal];
         echo json_encode($res);
     }
+
+
 }

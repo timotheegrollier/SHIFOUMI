@@ -6,6 +6,7 @@ window.addEventListener('load', () => {
     const resetBest = document.getElementById('resetBest');
     const gameFooter = document.getElementById('game-footer');
     let bestScore = parseInt(document.getElementById('best-score-score').innerHTML);
+    let equalityMsg = document.getElementById('equality-msg')
 
 
 
@@ -67,6 +68,16 @@ window.addEventListener('load', () => {
                 if (data[2]) {
                     computerScore++;
                     displayScore(score, computerScore);
+                }
+
+                if(data[3]){
+                    let equalityInterval = setInterval(()=>{
+                        equalityMsg.style.display = "flex"
+                        setTimeout(()=>{
+                            equalityMsg.style.display = "none"
+                        },200)
+                        clearInterval(equalityInterval)
+                    },1000)
                 }
             }
 

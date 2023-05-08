@@ -4,6 +4,7 @@
 
 
 
+<h2 id="equality-msg">EQUALITY</h2>
 <div id="home">
     <h3 id="score"></h3>
     <div id="computer-choice">

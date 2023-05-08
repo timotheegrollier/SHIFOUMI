@@ -83,6 +83,16 @@ h3{
 #game-footer #best-score{
     color: yellow;
 }
+#equality-msg{
+    font-size: 5rem;
+    color: red;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%,-50%);
+    display: none;
+    transition: 2s ease-in-out;
+}
 
 @media screen and (max-width: 768px) {
     #player-choice {
