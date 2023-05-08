@@ -43,19 +43,19 @@ window.addEventListener('load', () => {
                     computerStone.style.display = "block"
                 setTimeout(() => {
                     computerStone.style.display = "none"
-                }, 1000)
+                }, 500)
                 if (data[0] === "PAPER")
                     computerPaper.style.display = "block"
                 setTimeout(() => {
                     computerPaper.style.display = "none"
-                }, 1000)
+                }, 500)
                 if (data[0] === "SCISSOR")
                     computerScissor.style.display = "block"
                 setTimeout(() => {
                     computerScissor.style.display = "none"
                     choicesBox.style.display = "flex"
                     gameFooter.style.display = "flex"
-                }, 1000)
+                }, 500)
                 if (data[1]) {
                     score++;
                     displayScore(score, computerScore);

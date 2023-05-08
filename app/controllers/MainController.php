@@ -100,8 +100,10 @@ class MainController
     {
         if ($this->getComputer() === "SCISSOR")
             return true;
-        elseif ($this->getComputer() === "STONE")
+        elseif ($this->getComputer() === "STONE"){
             $this->setLoose(false);
+            $this->equal = true;
+        }
         else
             $this->setLoose(true);
         return false;
